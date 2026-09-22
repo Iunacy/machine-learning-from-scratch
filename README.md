@@ -26,7 +26,7 @@ The numbered folders broadly follow my learning progression.
 | [04_neural_networks](04_neural_networks/) | Manual forward/backpropagation and ReLU; MNIST `784 → 128 → 10`; full-batch and mini-batch Digits exercises |
 | [Digits early stopping](04_neural_networks/digits_nn_early_stopping.py) | `64 → 48 → 10`, shuffled batches, train/validation/test splits, validation-loss checkpointing, loss plots, confusion matrices, and per-class/macro/weighted/micro metrics |
 | [05_pytorch](05_pytorch/) | First saved [FashionMNIST MLP](05_pytorch/fashion_mnist_mlp.ipynb), using Adam, dropout, and train/test evaluation |
-| [experiments](experiments/) | Small metric and confidence exercises, mistake inspection, and incomplete snippets |
+| [experiments](experiments/) | Small metric and confidence exercises, mistake inspection, an [inverse-time learning-rate decay experiment](experiments/optimization/learning_rate_decay.ipynb), and incomplete snippets |
 
 The vectorized logistic-regression exercise performs one parameter update; later files add training loops. Early handwritten datasets demonstrate calculations. High accuracy on those examples says little about generalization. Breast Cancer Wisconsin, Digits, MNIST, and FashionMNIST provide real datasets for further practice, but remain educational benchmarks here.
 
