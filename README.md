@@ -1,71 +1,86 @@
 # Machine Learning from Scratch
 
-Python exercises documenting my progress from gradient descent and linear regression to a neural network trained with NumPy. I implement the forward passes, losses, gradients, and parameter updates myself. Scikit-learn supplies datasets and data splitting; the MNIST models use no automatic differentiation.
+A university student's learning repository, documenting my progression from basic machine-learning calculations in Python and NumPy toward using PyTorch.
 
-## Learning progression
+## Why this repository exists
 
-Follow the folders in order; each script is a standalone exercise.
+I started with small numerical examples to understand what training does: make predictions, calculate loss, compute gradients, and update parameters. My usual approach is:
 
-| Stage | Exercises in study order |
+**Concept → manual example → Python implementation → NumPy/vectorization → debugging → framework implementation**
+
+The repeated and sometimes verbose implementations reflect that process. They are educational exercises, not a reusable ML library.
+
+## Current learning stage
+
+As of September 22, 2026, I have recently started PyTorch after studying mainly through from-scratch implementations. Understanding the NumPy calculations helps me follow what autograd automates. I am now learning its model, optimizer, DataLoader, device, and evaluation APIs, and am still building fluency in the framework.
+
+## Progress and included implementations
+
+The numbered folders broadly follow my learning progression.
+
+| Stage | Included work |
 | --- | --- |
-| [01_linear_regression](01_linear_regression/) | `gradient_descent_single_step.py` → `gradient_descent_training.py` → `bias_gradient_descent.py` → `batch_linear_regression.py` → `linear_regression_with_bias.py` |
-| [02_logistic_regression](02_logistic_regression/) | `binary_logistic_regression.py` → `multifeature_logistic_regression.py` → `vectorized_logistic_regression.py` → `feature_standardization.py` → `scaled_logistic_regression.py` → `logistic_regression_train_val_test.py` → `breast_cancer_logistic_regression.py` |
-| [03_multiclass_classification](03_multiclass_classification/) | `mnist_softmax_regression.py`: ten-class classification with full-batch gradient descent |
-| [04_neural_networks](04_neural_networks/) | `mnist_one_hidden_layer_nn.py`: ReLU, manual backpropagation, and shuffled mini-batch SGD |
+| [01_linear_regression](01_linear_regression/) | Single gradient steps, repeated weight/bias updates, and multi-feature batch training with explicit Python loops |
+| [02_logistic_regression](02_logistic_regression/) | Sigmoid, binary cross-entropy, vectorized gradients, scaling, and splitting exercises; [breast-cancer classification](02_logistic_regression/breast_cancer_logistic_regression.py) uses training-set statistics to standardize both splits |
+| [03_multiclass_classification](03_multiclass_classification/) | Stable softmax, class-index cross-entropy, and [MNIST softmax regression](03_multiclass_classification/mnist_softmax_regression.py) |
+| [04_neural_networks](04_neural_networks/) | Manual forward/backpropagation and ReLU; MNIST `784 → 128 → 10`; full-batch and mini-batch Digits exercises |
+| [Digits early stopping](04_neural_networks/digits_nn_early_stopping.py) | `64 → 48 → 10`, shuffled batches, train/validation/test splits, validation-loss checkpointing, loss plots, confusion matrices, and per-class/macro/weighted/micro metrics |
+| [05_pytorch](05_pytorch/) | First saved [FashionMNIST MLP](05_pytorch/fashion_mnist_mlp.ipynb), using Adam, dropout, and train/test evaluation |
+| [experiments](experiments/) | Small metric and confidence exercises, mistake inspection, and incomplete snippets |
 
-The vectorized logistic exercise demonstrates a single parameter update; later exercises add full training loops, scaling, and evaluation. The breast-cancer exercise applies binary classification to a real dataset before the transition to MNIST.
+The vectorized logistic-regression exercise performs one parameter update; later files add training loops. Early handwritten datasets demonstrate calculations. High accuracy on those examples says little about generalization. Breast Cancer Wisconsin, Digits, MNIST, and FashionMNIST provide real datasets for further practice, but remain educational benchmarks here.
 
-[experiments/classification_metrics.py](experiments/classification_metrics.py) preserves intermediate work on prediction thresholds, confidence, and mistake analysis. It includes unfinished helpers and is kept as learning history.
+## Lessons from implementation
 
-## MNIST milestones
+- Tracing matrix shapes helped me distinguish a layer's inputs, activations, and gradients when debugging backpropagation.
+- Working through actual/predicted labels clarified confusion-matrix orientation and precision versus recall.
+- The Digits pipeline separates validation from testing, copies the best weights, and uses validation loss for early stopping. This helped me look beyond a single accuracy score.
+- In PyTorch, I learned to accumulate correct predictions across all batches instead of reporting only the final batch's accuracy. Matching Python interpreters and notebook kernels was also part of getting the environment working.
 
-| Model | Script | Train accuracy | Test accuracy |
+These are concepts I am practising, not claims of mastery.
+
+## Selected results and settings
+
+### NumPy MNIST
+
+Historical results from the previous README; scripts are present, but saved logs are absent and scores have not been reproduced.
+
+| Model | Train accuracy | Test accuracy | Current script settings |
 | --- | --- | --- | --- |
-| Softmax regression (784 → 10) | [mnist_softmax_regression.py](03_multiclass_classification/mnist_softmax_regression.py) | ~90.46% | ~90.46% |
-| One-hidden-layer network (784 → 128 → 10) | [mnist_one_hidden_layer_nn.py](04_neural_networks/mnist_one_hidden_layer_nn.py) | 94.94% | 94.49% |
+| Softmax regression | ~90.46% | ~90.46% | 1,000 epochs, learning rate 0.1, full batch |
+| One-hidden-layer network | 94.94% | 94.49% | 100 epochs, learning rate 0.01, batch size 256 |
 
-These are recorded results from my study runs, not newly reproduced benchmarks. Test accuracy improved by about 4.03 percentage points. The models also use different training schedules, so this is not a controlled architecture comparison.
+Both scale pixels by 255 and use a nonstandard 80/20 MNIST split (`random_state=42`). Different training schedules prevent a controlled architecture comparison.
 
-Both scripts load OpenML `mnist_784`, version 1, scale pixels by 255, and use an 80/20 random split with `random_state=42`: 56,000 training images and 14,000 test images. This differs from MNIST's standard 60,000/10,000 split.
+### First PyTorch FashionMNIST MLP
 
-| Setting | Softmax regression | Neural network |
+The saved notebook uses `784 → 256 → 128 → 10`, ReLU, dropout `p=0.3` after both hidden layers, cross-entropy, Adam (`lr=0.001`), batch size 256, and 20 epochs.
+
+| Saved evaluation output | Accuracy | Loss |
 | --- | --- | --- |
-| Epochs | 1,000 | 100 |
-| Learning rate | 0.1 | 0.01 |
-| Batch size | Full training set | 256 |
-| Initialization | Zero weights and biases | Normal weights (standard deviation 0.01), zero biases |
-| Random generator | No random weight initialization | NumPy `default_rng(42)` |
+| Training set | 91.64% | 0.2181 |
+| Test set | 88.61% | 0.3208 |
 
-The neural network computes gradients through both layers and ReLU before updating parameters. Its printed epoch loss is weighted by batch size, including the smaller final batch, and averages losses observed as parameters change during training.
+Saved notebook metrics may vary between runs: no random seed or separate validation set is configured.
 
-## Running an exercise
+An earlier comparison showed a smaller train/test gap with dropout, but slightly lower test accuracy and loss: a regularization tradeoff. The non-dropout baseline is not saved here, so that comparison cannot be reproduced from this repository.
 
-Install Python 3 and the dependencies:
+## Tools and running an exercise
+
+The NumPy exercises use Python, NumPy, scikit-learn for datasets/splits, and Matplotlib for plots:
 
 ```bash
 python -m pip install -r requirements.txt
-```
-
-Run a milestone from the repository folder:
-
-```bash
-python 03_multiclass_classification/mnist_softmax_regression.py
-python 04_neural_networks/mnist_one_hidden_layer_nn.py
-```
-
-The first MNIST run downloads data from OpenML and needs internet access. Later runs can reuse scikit-learn's local cache. Training can take time, especially the full-batch baseline.
-
-Earlier exercises remain standalone scripts, for example:
-
-```bash
-python 02_logistic_regression/logistic_regression_train_val_test.py
 python 02_logistic_regression/breast_cancer_logistic_regression.py
+python 04_neural_networks/digits_nn_early_stopping.py
 ```
 
-## About the code
+The PyTorch notebook additionally requires PyTorch, torchvision with the v2 transforms API, and a notebook environment such as Jupyter or VS Code. These are not included in `requirements.txt`. The notebook hardcodes `device="cuda"`, so its current version requires a compatible CUDA-enabled installation and NVIDIA GPU.
 
-This is a learning repository. Repeated implementations preserve stages of my understanding, and older practice scripts may still contain mistakes. Small synthetic examples demonstrate calculations rather than real-world performance.
+Select the appropriate notebook kernel and run all cells in order from a fresh kernel. FashionMNIST is downloaded into a relative `data/` directory. MNIST scripts download from OpenML and can take longer to train, particularly the full-batch baseline. Dependencies are not version-pinned.
 
-The softmax milestone was previously named `handwritten_classifier_mnist.py`. The neural-network milestone comes from my local `neural_network_from_scratch.py` exercise.
+## Next steps and limitations
 
-Next I plan to study initialization for ReLU networks and use a validation set for model selection while reserving the test set for final evaluation.
+Next I plan to learn CNN fundamentals and continue practising PyTorch, including more reproducible experiments and validation-based model selection. CNNs are not implemented here. Deployment, larger architectures, and advanced optimization remain outside my current experience.
+
+Older exercises may contain mistakes, and some snippets are incomplete. Dataset scores describe individual study runs, not real-world reliability or production readiness. The breast-cancer exercise is for learning classification and evaluation, not medical diagnosis.
