@@ -12,7 +12,7 @@ The repeated and sometimes verbose implementations reflect that process. They ar
 
 ## Current learning stage
 
-As of September 22, 2026, I have recently started PyTorch after studying mainly through from-scratch implementations. Understanding the NumPy calculations helps me follow what autograd automates. I am now learning its model, optimizer, DataLoader, device, and evaluation APIs, and am still building fluency in the framework.
+As of September 30, 2026, I am learning PyTorch after studying mainly through from-scratch implementations. Understanding the NumPy calculations helps me follow what autograd automates. I am also starting to work through the basic attention calculation used in Transformers, and am still building fluency with both.
 
 ## Progress and included implementations
 
@@ -26,6 +26,7 @@ The numbered folders broadly follow my learning progression.
 | [04_neural_networks](04_neural_networks/) | Manual forward/backpropagation and ReLU; MNIST `784 → 128 → 10`; full-batch and mini-batch Digits exercises |
 | [Digits early stopping](04_neural_networks/digits_nn_early_stopping.py) | `64 → 48 → 10`, shuffled batches, train/validation/test splits, validation-loss checkpointing, loss plots, confusion matrices, and per-class/macro/weighted/micro metrics |
 | [05_pytorch](05_pytorch/) | First saved [FashionMNIST MLP](05_pytorch/fashion_mnist_mlp.ipynb), using Adam, dropout, and train/test evaluation |
+| [06_transformers](06_transformers/) | A small [single-head scaled dot-product attention](06_transformers/scaled_dot_product_attention.py) exercise with learned query, key, and value projections |
 | [experiments](experiments/) | Small metric and confidence exercises, mistake inspection, an [inverse-time learning-rate decay experiment](experiments/optimization/learning_rate_decay.ipynb), and incomplete snippets |
 
 The vectorized logistic-regression exercise performs one parameter update; later files add training loops. Early handwritten datasets demonstrate calculations. High accuracy on those examples says little about generalization. Breast Cancer Wisconsin, Digits, MNIST, and FashionMNIST provide real datasets for further practice, but remain educational benchmarks here.
@@ -73,14 +74,15 @@ The NumPy exercises use Python, NumPy, scikit-learn for datasets/splits, and Mat
 python -m pip install -r requirements.txt
 python 02_logistic_regression/breast_cancer_logistic_regression.py
 python 04_neural_networks/digits_nn_early_stopping.py
+python 06_transformers/scaled_dot_product_attention.py
 ```
 
-The PyTorch notebook additionally requires PyTorch, torchvision with the v2 transforms API, and a notebook environment such as Jupyter or VS Code. These are not included in `requirements.txt`. The notebook hardcodes `device="cuda"`, so its current version requires a compatible CUDA-enabled installation and NVIDIA GPU.
+The PyTorch exercises additionally require PyTorch. The notebook also requires torchvision with the v2 transforms API and a notebook environment such as Jupyter or VS Code. These are not included in `requirements.txt`. The notebook hardcodes `device="cuda"`, so its current version requires a compatible CUDA-enabled installation and NVIDIA GPU; the attention script runs on CPU.
 
 Select the appropriate notebook kernel and run all cells in order from a fresh kernel. FashionMNIST is downloaded into a relative `data/` directory. MNIST scripts download from OpenML and can take longer to train, particularly the full-batch baseline. Dependencies are not version-pinned.
 
 ## Next steps and limitations
 
-Next I plan to learn CNN fundamentals and continue practising PyTorch, including more reproducible experiments and validation-based model selection. CNNs are not implemented here. Deployment, larger architectures, and advanced optimization remain outside my current experience.
+Next I plan to learn CNN fundamentals, continue practising PyTorch, and build from the attention calculation toward a fuller Transformer implementation. CNNs and a complete Transformer are not implemented here. Deployment, larger architectures, and advanced optimization remain outside my current experience.
 
 Older exercises may contain mistakes, and some snippets are incomplete. Dataset scores describe individual study runs, not real-world reliability or production readiness. The breast-cancer exercise is for learning classification and evaluation, not medical diagnosis.
