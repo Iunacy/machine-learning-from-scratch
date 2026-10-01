@@ -26,7 +26,7 @@ The numbered folders broadly follow my learning progression.
 | [04_neural_networks](04_neural_networks/) | Manual forward/backpropagation and ReLU; MNIST `784 → 128 → 10`; full-batch and mini-batch Digits exercises |
 | [Digits early stopping](04_neural_networks/digits_nn_early_stopping.py) | `64 → 48 → 10`, shuffled batches, train/validation/test splits, validation-loss checkpointing, loss plots, confusion matrices, and per-class/macro/weighted/micro metrics |
 | [05_pytorch](05_pytorch/) | First saved [FashionMNIST MLP](05_pytorch/fashion_mnist_mlp.ipynb), using Adam, dropout, and train/test evaluation |
-| [06_transformers](06_transformers/) | A small [single-head scaled dot-product attention](06_transformers/scaled_dot_product_attention.py) exercise with learned query, key, and value projections |
+| [06_transformers](06_transformers/) | Small exercises covering [single-head scaled dot-product attention](06_transformers/scaled_dot_product_attention.py) and a simplified [causal multi-head attention block](06_transformers/multi_head_attention.py) |
 | [experiments](experiments/) | Small metric and confidence exercises, mistake inspection, an [inverse-time learning-rate decay experiment](experiments/optimization/learning_rate_decay.ipynb), and incomplete snippets |
 
 The vectorized logistic-regression exercise performs one parameter update; later files add training loops. Early handwritten datasets demonstrate calculations. High accuracy on those examples says little about generalization. Breast Cancer Wisconsin, Digits, MNIST, and FashionMNIST provide real datasets for further practice, but remain educational benchmarks here.
@@ -75,6 +75,7 @@ python -m pip install -r requirements.txt
 python 02_logistic_regression/breast_cancer_logistic_regression.py
 python 04_neural_networks/digits_nn_early_stopping.py
 python 06_transformers/scaled_dot_product_attention.py
+python 06_transformers/multi_head_attention.py
 ```
 
 The PyTorch exercises additionally require PyTorch. The notebook also requires torchvision with the v2 transforms API and a notebook environment such as Jupyter or VS Code. These are not included in `requirements.txt`. The notebook hardcodes `device="cuda"`, so its current version requires a compatible CUDA-enabled installation and NVIDIA GPU; the attention script runs on CPU.
@@ -83,6 +84,6 @@ Select the appropriate notebook kernel and run all cells in order from a fresh k
 
 ## Next steps and limitations
 
-Next I plan to learn CNN fundamentals, continue practising PyTorch, and build from the attention calculation toward a fuller Transformer implementation. CNNs and a complete Transformer are not implemented here. Deployment, larger architectures, and advanced optimization remain outside my current experience.
+Next I plan to learn CNN fundamentals, continue practising PyTorch, and build from these attention exercises toward a fuller Transformer implementation. CNNs and a complete Transformer are not implemented here. Deployment, larger architectures, and advanced optimization remain outside my current experience.
 
 Older exercises may contain mistakes, and some snippets are incomplete. Dataset scores describe individual study runs, not real-world reliability or production readiness. The breast-cancer exercise is for learning classification and evaluation, not medical diagnosis.
