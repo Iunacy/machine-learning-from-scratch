@@ -11,10 +11,11 @@ I started with small numerical examples to understand what training does: make p
 Most implementations are written from scratch using Python and NumPy to understand the underlying mathematics, optimization, and training process. Later exercises introduce PyTorch.
 
 ### Topics Covered
-- Linear and logistic regression
-- Softmax and multiclass classification
-- Neural networks and backpropagation
+- [Linear regression](01_linear_regression/) and [logistic regression](02_logistic_regression/)
+- [Softmax and multiclass classification](03_multiclass_classification/)
+- [Neural networks and backpropagation](04_neural_networks/)
 - Training, evaluation, and early stopping
-- PyTorch and introductory transformers
+- [PyTorch](05_pytorch/) and [introductory transformers](06_transformers/)
+- [Additional experiments](experiments/), including classification metrics and optimization
 
 This repository is currently maintained as a learning archive.
